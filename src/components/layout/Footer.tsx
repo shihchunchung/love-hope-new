@@ -24,21 +24,24 @@ export async function Footer() {
         height={80}
         className="block h-auto w-full"
       />
-      <div className="py-6 text-center text-[14px] leading-relaxed text-[#898989] sm:text-[16px]">
+      <div className="py-6 text-center text-[16px] leading-relaxed text-[#898989]">
         <p>
           地址: {site.address}
           {"　"}
           電話:{" "}
           <a
             href={`tel:${site.phone.replace(/[^0-9+]/g, "")}`}
-            className="hover:text-[#8b0000]"
+            className="text-[#817C54] hover:text-[#8b0000]"
           >
             {site.phone}
           </a>
           {site.fax ? `　傳真: ${site.fax}` : null}
           {"　"}
           服務信箱:{" "}
-          <a href={`mailto:${site.email}`} className="hover:text-[#8b0000]">
+          <a
+            href={`mailto:${site.email}`}
+            className="text-[#817C54] hover:text-[#8b0000]"
+          >
             {site.email}
           </a>
         </p>

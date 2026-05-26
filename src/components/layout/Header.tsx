@@ -50,7 +50,7 @@ function NavRow({
   withFacebook?: boolean;
 }) {
   return (
-    <div className="text-center text-[18px] leading-relaxed text-[#817C54]">
+    <div className="text-center text-[18px] leading-relaxed">
       {items.map((item, i) => (
         <span key={item.label}>
           <span className="px-[3px]">|</span>
@@ -93,7 +93,7 @@ export function Header() {
         <h1 className="text-[30px] leading-tight font-bold text-[#8b0000]">
           一步一步向前行
         </h1>
-        <p className="mt-2 text-[20px] font-bold text-[#524741] sm:text-[24px]">
+        <p className="mt-2 text-[24px] font-bold text-[#524741]">
           美濃文創中心-搖籃咖啡x惠如小屋
         </p>
       </div>

@@ -88,16 +88,21 @@ function NavRow({
 
 export function Header() {
   return (
-    <header className="mx-auto w-full max-w-[1000px] px-4 pt-6">
-      <div className="text-center">
-        <h1 className="text-[30px] leading-tight font-bold text-[#8b0000]">
+    <header className="mx-auto w-full max-w-[1000px] px-4 pt-2">
+      {/* Inline span + <br> matches the legacy <font><b>…</b><br><font>…</font></font>
+          structure so the gap between title and subtitle comes from the
+          parent line-height (driven by the larger 30px inline span),
+          not from a block-element margin. */}
+      <h1 className="text-center leading-normal">
+        <span className="text-[30px] font-bold text-[#8b0000]">
           一步一步向前行
-        </h1>
-        <p className="mt-2 text-[24px] font-bold text-[#524741]">
+        </span>
+        <br />
+        <span className="text-[24px] font-bold text-[#524741]">
           美濃文創中心-搖籃咖啡x惠如小屋
-        </p>
-      </div>
-      <nav aria-label="主導覽" className="mt-4 space-y-1">
+        </span>
+      </h1>
+      <nav aria-label="主導覽" className="mt-2 space-y-1">
         <NavRow items={NAV_ROW_1} />
         <NavRow items={NAV_ROW_2} withFacebook />
       </nav>

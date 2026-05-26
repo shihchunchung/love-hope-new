@@ -24,7 +24,7 @@ export async function Footer() {
         height={80}
         className="block h-auto w-full"
       />
-      <div className="py-6 text-center text-[16px] leading-relaxed text-[#898989]">
+      <div className="py-3 text-center text-[16px] leading-relaxed text-[#898989]">
         <p>
           地址: {site.address}
           {"　"}

@@ -1,13 +1,14 @@
+import Image from "next/image";
 import Link from "next/link";
 
-import { content } from "@/lib/content";
-import { cn } from "@/lib/utils";
-
 /**
- * Old-site navigation (11 items) preserved 1:1.
- * Split into two rows on desktop to mirror the legacy layout.
+ * Legacy 1:1 — title block + two nav rows + FB icon, mirroring what
+ * lovehope.org.tw/index.html prints. Title and subtitle are hard-coded
+ * because the legacy site hard-codes them too; site.json only feeds the
+ * footer.
  */
-const NAV_PRIMARY: ReadonlyArray<{ href: string; label: string }> = [
+
+const NAV_ROW_1: ReadonlyArray<{ href: string; label: string }> = [
   { href: "/news", label: "最新消息" },
   { href: "/about/founder", label: "關於薛伯輝先生" },
   { href: "/about", label: "認識薛伯輝基金會" },
@@ -15,89 +16,89 @@ const NAV_PRIMARY: ReadonlyArray<{ href: string; label: string }> = [
   { href: "/about/father-gan", label: "認識甘惠忠神父" },
 ];
 
-const NAV_SECONDARY: ReadonlyArray<{ href: string; label: string }> = [
+// 文創小品 and 加入會員 have no destination on the legacy site (the legacy
+// <a> tags simply lack href). Reproduce that with span instead of Link.
+const NAV_ROW_2: ReadonlyArray<{ href: string | null; label: string }> = [
   { href: "/love-more", label: "真愛多多！系列活動" },
-  { href: "/cultural", label: "文創小品" },
+  { href: null, label: "文創小品" },
   { href: "/donate", label: "捐款與徵信" },
-  { href: "/membership", label: "加入會員" },
+  { href: null, label: "加入會員" },
   { href: "/venue", label: "場地租借" },
   { href: "/links", label: "相關連結" },
 ];
 
-function NavRow({
-  items,
-}: {
-  items: ReadonlyArray<{ href: string; label: string }>;
-}) {
-  return (
-    <ul className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-sm">
-      {items.map((link) => (
-        <li
-          key={link.href}
-          className="relative after:absolute after:top-1/2 after:-right-2.5 after:-translate-y-1/2 after:text-[color:var(--brand-line)] after:content-['|'] last:after:hidden"
-        >
-          <Link
-            href={link.href}
-            className="text-[color:var(--brand-warm)] transition-colors hover:text-[color:var(--brand-red)]"
-          >
-            {link.label}
-          </Link>
-        </li>
-      ))}
-    </ul>
+const FB_URL = "https://www.facebook.com/LoveHopeF";
+
+function NavItem({ item }: { item: { href: string | null; label: string } }) {
+  const cls = "text-[#817C54] hover:text-[#8b0000] transition-colors";
+  return item.href ? (
+    <Link href={item.href} className={cls}>
+      {item.label}
+    </Link>
+  ) : (
+    <span className={`${cls} cursor-default`}>{item.label}</span>
   );
 }
 
-export async function Header() {
-  const site = await content.getSite();
-
+function NavRow({
+  items,
+  withFacebook,
+}: {
+  items: ReadonlyArray<{ href: string | null; label: string }>;
+  withFacebook?: boolean;
+}) {
   return (
-    <header className="border-b border-[color:var(--brand-line)] bg-background">
-      <div className="mx-auto max-w-6xl px-6 py-6">
-        <Link
-          href="/"
-          className="group block text-center"
-          aria-label={`${site.name} 首頁`}
-        >
-          <span
-            className={cn(
-              "font-serif text-3xl font-semibold tracking-wide text-[color:var(--brand-red)]",
-              "transition-colors group-hover:text-[color:var(--brand-red-strong)]",
-            )}
-          >
-            {site.tagline ?? "一步一步向前行"}
-          </span>
-          <span className="mt-1 block text-sm text-[color:var(--brand-warm)]">
-            {site.name}
-          </span>
-        </Link>
-
-        <nav aria-label="主導覽" className="mt-5 space-y-2">
-          <NavRow items={NAV_PRIMARY} />
-          <NavRow items={NAV_SECONDARY} />
-          {site.social.facebook ? (
-            <div className="flex justify-center">
-              <a
-                href={site.social.facebook}
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label="Facebook 粉絲專頁"
-                className="text-[color:var(--brand-warm)] transition-colors hover:text-[color:var(--brand-red)]"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                  aria-hidden="true"
-                >
-                  <path d="M12 2.04C6.5 2.04 2 6.53 2 12.06c0 5 3.66 9.14 8.44 9.9v-7H7.9v-2.9h2.54v-2.2c0-2.5 1.5-3.9 3.78-3.9 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7A10 10 0 0 0 22 12.06c0-5.53-4.5-10.02-10-10.02Z" />
-                </svg>
-              </a>
-            </div>
+    <div className="text-center text-[18px] leading-relaxed text-[#817C54]">
+      {items.map((item, i) => (
+        <span key={item.label}>
+          <span className="px-[3px]">|</span>
+          <NavItem item={item} />
+          {i === items.length - 1 ? (
+            <>
+              {withFacebook ? (
+                <>
+                  {" "}
+                  <a
+                    href={FB_URL}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    aria-label="Facebook 粉絲專頁"
+                    className="inline-block align-text-bottom"
+                  >
+                    <Image
+                      src="/legacy/FB-picture.png"
+                      alt=""
+                      width={20}
+                      height={20}
+                      className="inline align-text-bottom"
+                    />
+                  </a>
+                </>
+              ) : null}
+              <span className="px-[3px]">|</span>
+            </>
           ) : null}
-        </nav>
+        </span>
+      ))}
+    </div>
+  );
+}
+
+export function Header() {
+  return (
+    <header className="mx-auto w-full max-w-[1000px] px-4 pt-6">
+      <div className="text-center">
+        <h1 className="font-serif text-[30px] leading-tight font-bold text-[#8b0000]">
+          一步一步向前行
+        </h1>
+        <p className="mt-1 font-serif text-[20px] font-bold text-[#524741] sm:text-[24px]">
+          美濃文創中心-搖籃咖啡x惠如小屋
+        </p>
       </div>
+      <nav aria-label="主導覽" className="mt-4 space-y-1">
+        <NavRow items={NAV_ROW_1} />
+        <NavRow items={NAV_ROW_2} withFacebook />
+      </nav>
     </header>
   );
 }

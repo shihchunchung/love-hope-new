@@ -1,71 +1,117 @@
-import Link from "next/link";
+import Image from "next/image";
 
-import { ArticleCard } from "@/components/article/ArticleCard";
-import { content } from "@/lib/content";
+import styles from "./page.module.css";
 
-export default async function HomePage() {
-  const [site, news] = await Promise.all([
-    content.getSite(),
-    content.listNews(),
-  ]);
-  const latest = news.slice(0, 3);
+/**
+ * Homepage 1:1 with legacy lovehope.org.tw/index.html:
+ *
+ *   header (title + nav)   ← layout.tsx / Header.tsx
+ *   carousel (1000×400, 8 images)
+ *     + title.png overlay  at top:394 left:381
+ *     + 多多logo overlay  at top:102 left:687
+ *   80px spacer
+ *   bottom2.png decoration
+ *   footer (contact info) ← layout.tsx / Footer.tsx
+ *
+ * Carousel rotates with CSS @keyframes (5 s per slide, 40 s cycle),
+ * matching the legacy jQuery behaviour without shipping JS.
+ */
 
+interface Slide {
+  src: string;
+  alt: string;
+  href?: string;
+  external?: boolean;
+}
+
+const SLIDES: ReadonlyArray<Slide> = [
+  { src: "/legacy/index/11月陪伴力量大.jpg", alt: "11 月陪伴力量大" },
+  { src: "/legacy/index/七月陪伴力量大.jpg", alt: "7 月陪伴力量大" },
+  { src: "/legacy/index/三月陪伴力量大.jpg", alt: "3 月陪伴力量大" },
+  { src: "/legacy/index/二月陪伴力量大.jpg", alt: "2 月陪伴力量大" },
+  {
+    src: "/legacy/index/威宏紅包袋.jpg",
+    alt: "奇蹟新家園擴建計畫 — 威宏紅包袋",
+    href: "/news",
+  },
+  {
+    src: "/legacy/index/美濃文創中心.jpg",
+    alt: "美濃文創中心",
+    href: "https://www.facebook.com/LoveHopeYLC/",
+    external: true,
+  },
+  {
+    src: "/legacy/index/首頁_伯利恆完成.jpg",
+    alt: "伯利恆早療暨融合教育中心完工實景",
+    href: "/news",
+  },
+  {
+    src: "/legacy/index/首頁_傳愛.jpg",
+    alt: "伯利恆落成 — 傳愛",
+    href: "/news",
+  },
+];
+
+function SlideCell({ slide }: { slide: Slide }) {
+  const img = (
+    <Image
+      className={styles.cellImg}
+      src={slide.src}
+      alt={slide.alt}
+      width={1000}
+      height={400}
+      priority
+    />
+  );
+  if (!slide.href) {
+    return <div className={styles.cell}>{img}</div>;
+  }
+  if (slide.external) {
+    return (
+      <a
+        href={slide.href}
+        target="_blank"
+        rel="noreferrer noopener"
+        className={styles.cell}
+      >
+        {img}
+      </a>
+    );
+  }
+  return (
+    <a href={slide.href} className={styles.cell}>
+      {img}
+    </a>
+  );
+}
+
+export default function HomePage() {
   return (
     <>
-      <section className="bg-[color:var(--brand-cream)] py-16 sm:py-24">
-        <div className="mx-auto max-w-4xl px-6 text-center">
-          <p className="text-sm tracking-widest text-[color:var(--brand-olive)]">
-            {site.tagline}
-          </p>
-          <h1 className="mt-3 font-serif text-3xl leading-tight font-semibold text-[color:var(--brand-red)] sm:text-5xl">
-            {site.name}
-          </h1>
-          <p className="mt-6 text-base text-[color:var(--brand-warm)] sm:text-lg">
-            自 1996 年起，以「愛與希望」為核心，
-            <br className="hidden sm:inline" />
-            支持偏鄉早療、特殊教育、文化推廣與在地創生。
-          </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/donate"
-              className="rounded-full bg-[color:var(--brand-red)] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[color:var(--brand-red-strong)]"
-            >
-              支持我們
-            </Link>
-            <Link
-              href="/about"
-              className="rounded-full border border-[color:var(--brand-warm)]/40 px-6 py-2.5 text-sm font-medium text-[color:var(--brand-warm)] transition-colors hover:border-[color:var(--brand-red)] hover:text-[color:var(--brand-red)]"
-            >
-              認識基金會
-            </Link>
+      <section className={styles.hero} aria-label="主視覺輪播">
+        <div className={styles.carousel}>
+          <div className={styles.strip}>
+            {SLIDES.map((slide) => (
+              <SlideCell key={slide.src} slide={slide} />
+            ))}
           </div>
         </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <div className="mb-8 flex items-baseline justify-between">
-          <h2 className="font-serif text-2xl font-semibold text-foreground">
-            最新消息
-          </h2>
-          <Link
-            href="/news"
-            className="text-sm text-[color:var(--brand-olive)] hover:text-[color:var(--brand-red)]"
-          >
-            看全部 →
-          </Link>
-        </div>
-
-        {latest.length === 0 ? (
-          <p className="text-muted-foreground">尚無消息。</p>
-        ) : (
-          <ul className="grid gap-5 md:grid-cols-3">
-            {latest.map((article) => (
-              <li key={article.slug}>
-                <ArticleCard article={article} hrefBase="/news" />
-              </li>
-            ))}
-          </ul>
-        )}
+        <Image
+          className={`${styles.overlay} ${styles.overlayTitle}`}
+          src="/legacy/index/title.png"
+          alt=""
+          width={277}
+          height={120}
+          priority
+        />
+        <Image
+          className={`${styles.overlay} ${styles.overlayLogo}`}
+          src="/legacy/index/多多logo_single.png"
+          alt=""
+          width={275}
+          height={275}
+          priority
+        />
       </section>
     </>
   );

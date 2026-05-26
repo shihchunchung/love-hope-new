@@ -1,0 +1,68 @@
+/**
+ * Brand design tokens — Hsueh Po-Hui Foundation.
+ *
+ * Anchors:
+ *   - Brand reds derived from ../love-hope (#8C0A0A / #5C0606 / #FBEEEE)
+ *   - Warm cream + olive accents preserved from the legacy lovehope.org.tw
+ *     site character (cream section backgrounds, olive-brown links)
+ *
+ * Layering on top of shadcn's neutral palette: shadcn handles UI surfaces
+ * (cards, inputs, dialogs); brand tokens drive editorial elements
+ * (article titles, nav, accent borders, hero).
+ *
+ * Values use OKLCH so brightness adjustments stay perceptually uniform.
+ */
+
+@theme inline {
+  --color-brand-red: var(--brand-red);
+  --color-brand-red-strong: var(--brand-red-strong);
+  --color-brand-red-tint: var(--brand-red-tint);
+  --color-brand-olive: var(--brand-olive);
+  --color-brand-warm: var(--brand-warm);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-line: var(--brand-line);
+
+  --font-serif:
+    "Noto Serif TC", "Noto Serif CJK TC", ui-serif, Georgia, serif;
+}
+
+:root {
+  /* Brand red family ------------------------------------------ */
+  /* #8C0A0A -> oklch(0.40 0.165 24) */
+  --brand-red: oklch(0.4 0.165 24);
+  /* #5C0606 -> oklch(0.30 0.135 24) */
+  --brand-red-strong: oklch(0.3 0.135 24);
+  /* #FBEEEE -> oklch(0.96 0.013 24) */
+  --brand-red-tint: oklch(0.96 0.013 24);
+
+  /* Editorial neutrals (legacy site character) ---------------- */
+  --brand-olive: oklch(0.55 0.04 95);
+  --brand-warm: oklch(0.4 0.02 60);
+  --brand-cream: oklch(0.97 0.012 85);
+  --brand-ink: oklch(0.18 0 0); /* #111 ink */
+  --brand-muted: oklch(0.62 0 0); /* #9A9A9A */
+  --brand-line: oklch(0.91 0 0); /* #E8E8E8 */
+
+  /* Hand off to shadcn so primary buttons / focus rings inherit brand */
+  --primary: var(--brand-red);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: var(--brand-red);
+}
+
+.dark {
+  --brand-red: oklch(0.62 0.18 24);
+  --brand-red-strong: oklch(0.55 0.2 24);
+  --brand-red-tint: oklch(0.32 0.05 24);
+  --brand-olive: oklch(0.7 0.04 95);
+  --brand-warm: oklch(0.7 0.02 60);
+  --brand-cream: oklch(0.2 0.012 85);
+  --brand-ink: oklch(0.985 0 0);
+  --brand-muted: oklch(0.6 0 0);
+  --brand-line: oklch(0.3 0 0);
+
+  --primary: var(--brand-red);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: var(--brand-red);
+}

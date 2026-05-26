@@ -17,7 +17,7 @@ export default async function HomePage() {
           <p className="text-sm tracking-widest text-[color:var(--brand-olive)]">
             {site.tagline}
           </p>
-          <h1 className="mt-3 font-serif text-3xl font-semibold leading-tight text-[color:var(--brand-red)] sm:text-5xl">
+          <h1 className="mt-3 font-serif text-3xl leading-tight font-semibold text-[color:var(--brand-red)] sm:text-5xl">
             {site.name}
           </h1>
           <p className="mt-6 text-base text-[color:var(--brand-warm)] sm:text-lg">

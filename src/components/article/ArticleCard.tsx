@@ -24,7 +24,7 @@ export function ArticleCard({ article, hrefBase }: Props) {
         >
           {dateFormatter.format(article.publishedAt)}
         </time>
-        <h3 className="mt-2 font-serif text-lg font-medium leading-snug text-foreground transition-colors group-hover:text-[color:var(--brand-red)]">
+        <h3 className="mt-2 font-serif text-lg leading-snug font-medium text-foreground transition-colors group-hover:text-[color:var(--brand-red)]">
           {article.title}
         </h3>
         {article.summary ? (

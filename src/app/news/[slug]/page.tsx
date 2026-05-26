@@ -43,9 +43,10 @@ export default async function NewsArticlePage({ params }: PageProps) {
           dateTime={article.publishedAt.toISOString()}
           className="text-sm text-muted-foreground"
         >
-          {dateFormatter.format(article.publishedAt)}　·　約 {article.readingMinutes} 分鐘
+          {dateFormatter.format(article.publishedAt)}　·　約{" "}
+          {article.readingMinutes} 分鐘
         </time>
-        <h1 className="mt-3 font-serif text-3xl font-semibold leading-snug text-[color:var(--brand-red)] sm:text-4xl">
+        <h1 className="mt-3 font-serif text-3xl leading-snug font-semibold text-[color:var(--brand-red)] sm:text-4xl">
           {article.title}
         </h1>
         {article.summary ? (
@@ -56,7 +57,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
       </header>
 
       <div
-        className="prose prose-zinc mt-8 max-w-none prose-headings:font-serif prose-headings:text-foreground prose-a:text-[color:var(--brand-olive)] hover:prose-a:text-[color:var(--brand-red)]"
+        className="prose mt-8 max-w-none prose-zinc prose-headings:font-serif prose-headings:text-foreground prose-a:text-[color:var(--brand-olive)] hover:prose-a:text-[color:var(--brand-red)]"
         dangerouslySetInnerHTML={{ __html: article.bodyHtml }}
       />
     </article>

@@ -26,6 +26,12 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  // Expose basePath at runtime so src/lib/asset.ts can prepend it to
+  // `next/image` src and raw <img> URLs (basePath is NOT auto-applied
+  // to those paths when output: "export").
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   turbopack: {
     root: projectRoot,
   },

@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { asset } from "@/lib/asset";
 import { content } from "@/lib/content";
 
 /**
@@ -17,7 +18,7 @@ export async function Footer() {
     <footer className="mx-auto w-full max-w-[1000px] px-4">
       <div className="h-20" aria-hidden="true" />
       <Image
-        src="/legacy/bottom2.png"
+        src={asset("/legacy/bottom2.png")}
         alt=""
         width={1000}
         height={80}

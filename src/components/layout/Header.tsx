@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { asset } from "@/lib/asset";
+
 /**
  * Legacy 1:1 — title block + two nav rows + FB icon, mirroring what
  * lovehope.org.tw/index.html prints. Title and subtitle are hard-coded
@@ -66,7 +68,7 @@ function NavRow({
                     className="inline-block align-text-bottom"
                   >
                     <Image
-                      src="/legacy/FB-picture.png"
+                      src={asset("/legacy/FB-picture.png")}
                       alt=""
                       width={20}
                       height={20}

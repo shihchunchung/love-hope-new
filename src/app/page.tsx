@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { asset } from "@/lib/asset";
+
 import styles from "./page.module.css";
 
 /**
@@ -56,7 +58,7 @@ function SlideCell({ slide }: { slide: Slide }) {
   const img = (
     <Image
       className={styles.cellImg}
-      src={slide.src}
+      src={asset(slide.src)}
       alt={slide.alt}
       width={1000}
       height={400}
@@ -98,7 +100,7 @@ export default function HomePage() {
         </div>
         <Image
           className={`${styles.overlay} ${styles.overlayTitle}`}
-          src="/legacy/index/title.png"
+          src={asset("/legacy/index/title.png")}
           alt=""
           width={277}
           height={120}
@@ -106,7 +108,7 @@ export default function HomePage() {
         />
         <Image
           className={`${styles.overlay} ${styles.overlayLogo}`}
-          src="/legacy/index/多多logo_single.png"
+          src={asset("/legacy/index/多多logo_single.png")}
           alt=""
           width={275}
           height={275}

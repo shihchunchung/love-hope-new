@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_TC, Noto_Serif_TC } from "next/font/google";
+import { Noto_Serif_TC } from "next/font/google";
 
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
@@ -7,13 +7,15 @@ import { content } from "@/lib/content";
 
 import "./globals.css";
 
-const notoSans = Noto_Sans_TC({
-  variable: "--font-sans",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "700"],
-});
-
+/**
+ * Font strategy (per legacy site fidelity):
+ *   - Mac users get PingFang TC (system font, sans-serif) — what the
+ *     legacy lovehope.org.tw rendered as on macOS browsers.
+ *   - Everyone else gets Noto Serif TC loaded from Google Fonts.
+ *
+ * Implemented in globals.css via:
+ *     body { font-family: "PingFang TC", var(--font-serif), serif; }
+ */
 const notoSerif = Noto_Serif_TC({
   variable: "--font-serif",
   subsets: ["latin"],
@@ -38,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="zh-Hant-TW"
-      className={`${notoSans.variable} ${notoSerif.variable} h-full antialiased`}
+      className={`${notoSerif.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <Header />

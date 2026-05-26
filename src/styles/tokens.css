@@ -23,8 +23,6 @@
   --color-brand-ink: var(--brand-ink);
   --color-brand-muted: var(--brand-muted);
   --color-brand-line: var(--brand-line);
-
-  --font-serif: "Noto Serif TC", "Noto Serif CJK TC", ui-serif, Georgia, serif;
 }
 
 :root {

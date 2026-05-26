@@ -125,8 +125,11 @@
   }
   body {
     @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
+    /* Mac → PingFang TC (system); others → Noto Serif TC loaded via
+       next/font/google. var(--font-serif) is injected on <html> by
+       layout.tsx. */
+    font-family:
+      "PingFang TC", "PingFang HK", var(--font-serif), "Noto Serif TC",
+      ui-serif, serif;
   }
 }

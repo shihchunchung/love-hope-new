@@ -90,10 +90,10 @@ export function Header() {
   return (
     <header className="mx-auto w-full max-w-[1000px] px-4 pt-6">
       <div className="text-center">
-        <h1 className="font-serif text-[30px] leading-tight font-bold text-[#8b0000]">
+        <h1 className="text-[30px] leading-tight font-bold text-[#8b0000]">
           一步一步向前行
         </h1>
-        <p className="mt-1 font-serif text-[20px] font-bold text-[#524741] sm:text-[24px]">
+        <p className="mt-2 text-[20px] font-bold text-[#524741] sm:text-[24px]">
           美濃文創中心-搖籃咖啡x惠如小屋
         </p>
       </div>
